@@ -192,12 +192,12 @@ where year(transactionDate) = 2023
 
 -----12. Retrieve customers who have not made any payments. 
 
-select c.customerID, concat(c.firstName, ' '+c.lastName) as customer_name
-from Customers c
-where not exists(
-select 1 from lease l
-join Payment p on l.leaseID = p.leaseID
-where l.customerID = c.customerID)
+select * from Customers
+where customerID NOT IN (
+select customerID
+from Lease
+where leaseID IN (
+select leaseID from Payment))
 
 -----13. Retrieve Car Details and Their Total Payments. 
 
